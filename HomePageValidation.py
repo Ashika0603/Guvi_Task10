@@ -20,10 +20,18 @@ try:
       #getting current URL value
       current_url = driver.current_url
       print(f"The current URL is: {current_url}")
-      #get the entire page content
+      #getting the entire page content
       page_content = driver.page_source
       filename = "webpage_task_11.txt"
       #save the content to the text file
+      with open(filename, "w", encoding="utf-8") as file:
+          file.write(page_content)
+      print(f"Webpage content successfully saved to {filename}")
+
+      # Extract text values from the page
+      page_content = driver.find_element(By.TAG_NAME, "html").text
+      filename = "webpage_task_10.txt"
+      # save the content to the text file
       with open(filename, "w", encoding="utf-8") as file:
           file.write(page_content)
       print(f"Webpage content successfully saved to {filename}")
