@@ -38,3 +38,11 @@ def test_homePage():
     else:
         print("invalid credentials test failed")
 
+    #Extract text values from the page
+    page_content = driver.find_element(By.TAG_NAME,"html").text
+    filename = "webpage_task_10.txt"
+    # save the content to the text file
+    with open(filename, "w", encoding="utf-8") as file:
+        file.write(page_content)
+    print(f"Webpage content successfully saved to {filename}")
+
