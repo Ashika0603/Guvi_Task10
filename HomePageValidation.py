@@ -3,6 +3,7 @@ from selenium.webdriver.common.by import By
 import time
 
 driver = webdriver.Chrome()
+driver.maximize_window()
 driver.get("https://www.saucedemo.com/")
 time.sleep(5)
 driver.find_element(By.NAME,"user-name").send_keys("standard_user")
