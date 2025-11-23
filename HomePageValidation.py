@@ -2,18 +2,18 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 import time
 
-#initiating chrome
-driver = webdriver.Chrome()
-driver.maximize_window()
-driver.get("https://www.saucedemo.com/")
-time.sleep(5)
-#passing username and password
-driver.find_element(By.NAME,"user-name").send_keys("standard_user")
-driver.find_element(By.NAME,"password").send_keys("secret_sauce")
-driver.find_element(By.ID,"login-button").click()
-time.sleep(5)
-
 try:
+      #initiating chrome
+      driver = webdriver.Chrome()
+      driver.maximize_window()
+      driver.get("https://www.saucedemo.com/")
+      time.sleep(5)
+      #passing username and password
+      driver.find_element(By.NAME,"user-name").send_keys("standard_user")
+      driver.find_element(By.NAME,"password").send_keys("secret_sauce")
+      driver.find_element(By.ID,"login-button").click()
+      time.sleep(5)
+
       #getting tite value
       page_title = driver.title
       print(f"The title of the webpage is: {page_title}")

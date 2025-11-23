@@ -1,28 +1,15 @@
-import time
-from sys import flags
 
+from HomePageValidation import *
 from selenium import webdriver
 from selenium.common import NoSuchElementException
 from selenium.webdriver.common.by import By
 
-def driver_setup():
-    driver = webdriver.Chrome()
-    driver.maximize_window()
-    driver.get("https://www.saucedemo.com/")
-    return driver
 
 def teardown(driver):
     driver.quit()
 
 def test_homePage():
-    driver = driver_setup()
-    time.sleep(5)
-    driver.find_element(By.NAME, "user-name").send_keys("standard_user")
-    driver.find_element(By.NAME, "password").send_keys("secret_sauce")
-    driver.find_element(By.ID, "login-button").click()
-    time.sleep(5)
-    page_title = driver.title
-    print(f"The title of the webpage is: {page_title}")
+
     if "Swag Labs" == page_title:
         print("Title of the web page is validated test passed")
     else:
@@ -31,14 +18,6 @@ def test_homePage():
 
 
 def test_current_url():
-    driver = driver_setup()
-    time.sleep(5)
-    driver.find_element(By.NAME, "user-name").send_keys("standard_user")
-    driver.find_element(By.NAME, "password").send_keys("secret_sauce")
-    driver.find_element(By.ID, "login-button").click()
-    time.sleep(5)
-    current_url = driver.current_url
-    print(f"The current URL is: {current_url}")
 
     if "https://www.saucedemo.com/inventory.html" == current_url:
             print("URL of the homepage validation is Successful")
@@ -49,7 +28,9 @@ def test_current_url():
 
 def test_invalid_login():
     try:
-        driver = driver_setup()
+        driver = webdriver.Chrome()
+        driver.maximize_window()
+        driver.get("https://www.saucedemo.com/")
         time.sleep(5)
         driver.find_element(By.NAME, "user-name").send_keys("standard_user1")
         driver.find_element(By.NAME, "password").send_keys("secret_sauce2")
