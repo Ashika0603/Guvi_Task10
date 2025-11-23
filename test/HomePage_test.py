@@ -2,41 +2,75 @@ import time
 from sys import flags
 
 from selenium import webdriver
+from selenium.common import NoSuchElementException
 from selenium.webdriver.common.by import By
 
-def test_homePage():
-
+def driver_setup():
     driver = webdriver.Chrome()
     driver.maximize_window()
     driver.get("https://www.saucedemo.com/")
+    return driver
+
+def teardown(driver):
+    driver.quit()
+
+def test_homePage():
+    driver = driver_setup()
     time.sleep(5)
-    user_name = "standard_user"
-    password = "secret_sauce"
-    driver.find_element(By.NAME, "user-name").send_keys(user_name)
-    driver.find_element(By.NAME, "password").send_keys(password)
+    driver.find_element(By.NAME, "user-name").send_keys("standard_user")
+    driver.find_element(By.NAME, "password").send_keys("secret_sauce")
     driver.find_element(By.ID, "login-button").click()
     time.sleep(5)
     page_title = driver.title
     print(f"The title of the webpage is: {page_title}")
-
     if "Swag Labs" == page_title:
         print("Title of the web page is validated test passed")
     else:
         print("Title mismatch test failed")
+    teardown(driver)
 
+
+def test_current_url():
+    driver = driver_setup()
+    time.sleep(5)
+    driver.find_element(By.NAME, "user-name").send_keys("standard_user")
+    driver.find_element(By.NAME, "password").send_keys("secret_sauce")
+    driver.find_element(By.ID, "login-button").click()
+    time.sleep(5)
     current_url = driver.current_url
     print(f"The current URL is: {current_url}")
 
     if "https://www.saucedemo.com/inventory.html" == current_url:
-        print("URL of the homepage validation Successful")
+            print("URL of the homepage validation is Successful")
     else:
-        print("URL mismatch test failed")
+            print("URL mismatch test failed")
+    teardown(driver)
 
-    if user_name == "standard_user" and password == "secret_sauce":
-         print("Logged in with given credentials test passed")
-         print(f"URL of the dashboard is: {current_url}")
-    else:
-        print("invalid credentials test failed")
+
+def test_invalid_login():
+    try:
+        driver = driver_setup()
+        time.sleep(5)
+        driver.find_element(By.NAME, "user-name").send_keys("standard_user1")
+        driver.find_element(By.NAME, "password").send_keys("secret_sauce2")
+        driver.find_element(By.ID, "login-button").click()
+        time.sleep(5)
+        error_message = driver.find_element(By.CLASS_NAME, "error-message-container.error")
+
+        if error_message.is_displayed():
+            print(f"Login failed: Error message displayed: {error_message.text}")
+    except NoSuchElementException:
+        print("Login successful: No error message found.")
+
+        teardown(driver)
+
+
+
+
+
+
+
+
 
 
 
